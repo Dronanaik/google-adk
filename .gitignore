@@ -1,1 +1,4 @@
 .adk/
+__pycache__/
+.vscode/
+.env/
