@@ -1,4 +1,8 @@
 .adk/
 __pycache__/
 .vscode/
-.env/
+crawl4AI-agent/.env
+crawl4AI-agent/__pycache__/
+PlaywrightAPI/.env
+PlaywrightAPI/__pycache__/
+mcpagent/__pycache__/
