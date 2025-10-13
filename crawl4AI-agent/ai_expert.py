@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 from __future__ import annotations as _annotations
 from dataclasses import dataclass
 from dotenv import load_dotenv

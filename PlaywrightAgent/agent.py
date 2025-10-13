@@ -1,3 +1,5 @@
+# pyright: reportMissingImports=false
+
 from google.adk.agents import LlmAgent
 # Corrected import to include StdioConnectionParams
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioConnectionParams
