@@ -18,7 +18,7 @@ root_agent = LlmAgent(
         MCPToolset(
             connection_params=StreamableHTTPConnectionParams(
                 url="https://mcp.financialdatasets.ai/api",
-                headers={"X-API-KEY": "f2659e73-510e-4623-8ddd-4533ce371c73"}
+                headers={"X-API-KEY": "your-api-key-here"},
             )
         )
     ],
