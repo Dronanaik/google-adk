@@ -415,7 +415,8 @@ If you encounter issues:
 
 ---
 ## Demo 
-
+<img width="1920" height="1052" alt="Image" src="https://github.com/user-attachments/assets/1868f3ef-2dc6-48ca-b45b-a2f99a13980e" />
+---
 **Happy Coding! 🚀**
 
 Built with ❤️ using Google ADK and Streamlit
