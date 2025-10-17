@@ -6,3 +6,5 @@ crawl4AI-agent/__pycache__/
 PlaywrightAPI/.env
 PlaywrightAPI/__pycache__/
 mcpagent/__pycache__/
+finetune_agent/__pycache__/
+.env

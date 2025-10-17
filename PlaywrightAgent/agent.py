@@ -8,7 +8,7 @@ import sys
 
 # Create the LlmAgent
 root_agent = LlmAgent(
-    model="gemini-2.5-pro",
+    model="gemini-2.0-flash",
     name="playwright_agent",
     instruction="""
     You are an expert web automation assistant. Your goal is to use the Playwright tools to fulfill user requests that require browser interaction.
@@ -27,7 +27,6 @@ root_agent = LlmAgent(
                 server_params=StdioServerParameters(
                     command="npx",
                     args=["@playwright/mcp@latest"],
-                    shell=True,
                     timeout_sec=120.0
                 ),
                 # Set a longer timeout in seconds (e.g., 60 seconds)
