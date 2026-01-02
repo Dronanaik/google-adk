@@ -2,9 +2,7 @@
 
 A powerful AI-driven agent capable of connecting to your databases, understanding your data schema, and answering natural language questions by generating and executing SQL queries. Built with [Google Agent Development Kit (ADK)](https://github.com/google/adk) and [Streamlit](https://streamlit.io/).
 
-[![Watch the Demo](https://img.icons8.com/color/96/000000/play--v1.png)](assets/demo.mp4)
-
-*Click the play button above to watch the demo video.*
+<video src="https://github.com/user-attachments/assets/34745d3a-f576-47a4-92b2-0628bcefa085" controls="controls" style="max-width: 100%;"></video>
 
 ## ✨ Features
 
