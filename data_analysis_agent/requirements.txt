@@ -1,0 +1,10 @@
+google-adk
+streamlit
+pandas
+sqlalchemy
+psycopg2-binary
+google-cloud-bigquery
+mysql-connector-python
+python-dotenv
+altair
+plotly
