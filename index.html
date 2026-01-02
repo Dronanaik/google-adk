@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google ADK Agents Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #f8f9fa;
+            --text-color: #202124;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        p.subtitle {
+            color: #5f6368;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #202124;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            color: #5f6368;
+            flex-grow: 1;
+        }
+
+        .card-actions {
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1557b0;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #e8f0fe;
+            color: #1967d2;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Google ADK Agents</h1>
+        <p class="subtitle">A collection of intelligent agents built with the Google Agent Development Kit</p>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            <!-- Data Analysis Agent -->
+            <div class="card">
+                <div><span class="tag">SQL & Data</span></div>
+                <h2>Data Analysis Agent</h2>
+                <p>A powerful agent capable of connecting to databases (PostgreSQL, MySQL, BigQuery), understanding
+                    schemas, and answering natural language questions by executing SQL queries.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/data_analysis_agent" class="btn">View
+                        Agent</a>
+                </div>
+            </div>
+
+            <!-- Streamlit Code Generator -->
+            <div class="card">
+                <div><span class="tag">Code Generation</span></div>
+                <h2>Streamlit Code Generator</h2>
+                <p>An intelligent agent that generates complete, runnable Streamlit applications from natural language
+                    requirements. Creates dashboards, forms, and data visualizations instantly.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/Streamlit-Code-Gen-agent"
+                        class="btn">View Agent</a>
+                </div>
+            </div>
+
+            <!-- Playwright Agent -->
+            <div class="card">
+                <div><span class="tag">Browser Automation</span></div>
+                <h2>Playwright Agent</h2>
+                <p>An end-to-end browser automation agent using Playwright's MCP server. It can browse the web, extract
+                    data, and interact with websites using reasoning-first prompts.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/PlaywrightAgent" class="btn">View
+                        Agent</a>
+                </div>
+            </div>
+
+            <!-- Job Search Agent -->
+            <div class="card">
+                <div><span class="tag">Productivity</span></div>
+                <h2>Job Search Agent</h2>
+                <p>An advanced assistant that ingests resumes, extracts profiles, and autonomously browses job boards
+                    like Naukri and LinkedIn to find relevant opportunities.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/job_search_agent" class="btn">View
+                        Agent</a>
+                </div>
+            </div>
+
+            <!-- Crawl4AI Agent -->
+            <div class="card">
+                <div><span class="tag">RAG & Search</span></div>
+                <h2>Crawl4AI Agent</h2>
+                <p>An Agentic RAG system leveraging Crawl4ai for documentation scraping, vector embeddings, and Supabase
+                    for knowledgeable, context-aware answers.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/crawl4AI-agent" class="btn">View
+                        Agent</a>
+                </div>
+            </div>
+
+            <!-- Financial MCP Agent -->
+            <div class="card">
+                <div><span class="tag">Finance</span></div>
+                <h2>Financial MCP Agent</h2>
+                <p>A specialized agent configured to interact with the Financial Datasets MCP remote server to fetch
+                    real-time financial data and answer market queries.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/financial-mcp-agent" class="btn">View
+                        Agent</a>
+                </div>
+            </div>
+
+            <!-- Test Data Generator -->
+            <div class="card">
+                <div><span class="tag">Development Tool</span></div>
+                <h2>Test Data Generator</h2>
+                <p>Creates realistic, structured test data for development. Generates personal profiles, business data,
+                    and custom patterns for database seeding.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/test_data_generator" class="btn">View
+                        Agent</a>
+                </div>
+            </div>
+
+            <!-- Memory Agent CLI -->
+            <div class="card">
+                <div><span class="tag">Creative Writing</span></div>
+                <h2>Memory Agent CLI</h2>
+                <p>A CLI application for interactive storytelling. Uses a persistent memory agent to generate engaging
+                    and imaginative stories based on user prompts.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/MemoryAgentCLI" class="btn">View
+                        Agent</a>
+                </div>
+            </div>
+
+            <!-- MCP Agent ADK -->
+            <div class="card">
+                <div><span class="tag">Integration</span></div>
+                <h2>MCP Agent ADK</h2>
+                <p>A demonstration of integrating custom Model Context Protocol (MCP) servers deployed on Alpic.ai with
+                    the Google ADK framework.</p>
+                <div class="card-actions">
+                    <a href="https://github.com/Dronanaik/google-adk/tree/main/mcp-agent-adk" class="btn">View Agent</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
