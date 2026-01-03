@@ -5,112 +5,348 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google ADK Agents Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --primary-color: #1a73e8;
-            --secondary-color: #f8f9fa;
-            --text-color: #202124;
-            --card-bg: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --bg-dark: #0a0e27;
+            --bg-gradient-start: #0f1629;
+            --bg-gradient-end: #1a1f3a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --lightning-glow: rgba(59, 130, 246, 0.5);
         }
 
         body {
-            font-family: 'Google Sans', Roboto, Arial, sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         header {
-            background-color: #fff;
-            padding: 2rem 1rem;
+            position: relative;
+            padding: 4rem 2rem 3rem;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
         }
 
         h1 {
-            color: var(--primary-color);
-            margin: 0;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         p.subtitle {
-            color: #5f6368;
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 1rem 3rem;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 1;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
             height: 100%;
         }
 
+        .card {
+            position: relative;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Lightning border effect */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-cyan));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Glow effect */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--lightning-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px var(--lightning-glow);
         }
 
-        .card h2 {
-            margin-top: 0;
-            color: #202124;
-            font-size: 1.5rem;
+        .card:hover::before {
+            opacity: 1;
+            animation: rotateBorder 3s linear infinite;
         }
 
-        .card p {
-            color: #5f6368;
-            flex-grow: 1;
+        .card:hover::after {
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .card-actions {
-            margin-top: 1.5rem;
+        @keyframes rotateBorder {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
         }
 
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.2s;
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
         }
 
-        .btn:hover {
-            background-color: #1557b0;
+        .card-logo {
+            width: 100%;
+            max-width: 280px;
+            height: 280px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: block;
+            transition: transform 0.4s ease;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+        }
+
+        .card:hover .card-logo {
+            transform: scale(1.05);
         }
 
         .tag {
             display: inline-block;
-            background-color: #e8f0fe;
-            color: #1967d2;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            color: var(--accent-cyan);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .agent-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+
+        /* Lightning bolt icon animation */
+        .lightning-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            opacity: 0;
+            transform: scale(0) rotate(-15deg);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .lightning-icon {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.5) drop-shadow(0 0 10px var(--accent-cyan));
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p.subtitle {
+                font-size: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .card-logo {
+                height: 240px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 3rem 1rem 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem 3rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -118,118 +354,126 @@
 <body>
 
     <header>
-        <h1>Google ADK Agents</h1>
+        <h1>⚡ Google ADK Agents</h1>
         <p class="subtitle">A collection of intelligent agents built with the Google Agent Development Kit</p>
     </header>
 
     <div class="container">
         <div class="grid">
             <!-- Data Analysis Agent -->
-            <div class="card">
-                <div><span class="tag">SQL & Data</span></div>
-                <h2>Data Analysis Agent</h2>
-                <p>A powerful agent capable of connecting to databases (PostgreSQL, MySQL, BigQuery), understanding
-                    schemas, and answering natural language questions by executing SQL queries.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/data_analysis_agent" class="btn">View
-                        Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/data_analysis_agent" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/data_analysis_agent.png" alt="Data Analysis Agent" class="card-logo">
+                    <div><span class="tag">SQL & Data</span></div>
+                    <h2>Data Analysis Agent</h2>
+                    <p>A powerful agent capable of connecting to databases (PostgreSQL, MySQL, BigQuery), understanding
+                        schemas, and answering natural language questions by executing SQL queries.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Streamlit Code Generator -->
-            <div class="card">
-                <div><span class="tag">Code Generation</span></div>
-                <h2>Streamlit Code Generator</h2>
-                <p>An intelligent agent that generates complete, runnable Streamlit applications from natural language
-                    requirements. Creates dashboards, forms, and data visualizations instantly.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/Streamlit-Code-Gen-agent"
-                        class="btn">View Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/Streamlit-Code-Gen-agent" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/streamlit_code_gen.png" alt="Streamlit Code Generator" class="card-logo">
+                    <div><span class="tag">Code Generation</span></div>
+                    <h2>Streamlit Code Generator</h2>
+                    <p>An intelligent agent that generates complete, runnable Streamlit applications from natural
+                        language
+                        requirements. Creates dashboards, forms, and data visualizations instantly.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Playwright Agent -->
-            <div class="card">
-                <div><span class="tag">Browser Automation</span></div>
-                <h2>Playwright Agent</h2>
-                <p>An end-to-end browser automation agent using Playwright's MCP server. It can browse the web, extract
-                    data, and interact with websites using reasoning-first prompts.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/PlaywrightAgent" class="btn">View
-                        Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/PlaywrightAgent" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/playwright_agent.png" alt="Playwright Agent" class="card-logo">
+                    <div><span class="tag">Browser Automation</span></div>
+                    <h2>Playwright Agent</h2>
+                    <p>An end-to-end browser automation agent using Playwright's MCP server. It can browse the web,
+                        extract
+                        data, and interact with websites using reasoning-first prompts.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Job Search Agent -->
-            <div class="card">
-                <div><span class="tag">Productivity</span></div>
-                <h2>Job Search Agent</h2>
-                <p>An advanced assistant that ingests resumes, extracts profiles, and autonomously browses job boards
-                    like Naukri and LinkedIn to find relevant opportunities.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/job_search_agent" class="btn">View
-                        Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/job_search_agent" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/job_search_agent.png" alt="Job Search Agent" class="card-logo">
+                    <div><span class="tag">Productivity</span></div>
+                    <h2>Job Search Agent</h2>
+                    <p>An advanced assistant that ingests resumes, extracts profiles, and autonomously browses job
+                        boards
+                        like Naukri and LinkedIn to find relevant opportunities.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Crawl4AI Agent -->
-            <div class="card">
-                <div><span class="tag">RAG & Search</span></div>
-                <h2>Crawl4AI Agent</h2>
-                <p>An Agentic RAG system leveraging Crawl4ai for documentation scraping, vector embeddings, and Supabase
-                    for knowledgeable, context-aware answers.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/crawl4AI-agent" class="btn">View
-                        Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/crawl4AI-agent" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/Crawl4ai_agent.png" alt="Crawl4AI Agent" class="card-logo">
+                    <div><span class="tag">RAG & Search</span></div>
+                    <h2>Crawl4AI Agent</h2>
+                    <p>An Agentic RAG system leveraging Crawl4ai for documentation scraping, vector embeddings, and
+                        Supabase
+                        for knowledgeable, context-aware answers.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Financial MCP Agent -->
-            <div class="card">
-                <div><span class="tag">Finance</span></div>
-                <h2>Financial MCP Agent</h2>
-                <p>A specialized agent configured to interact with the Financial Datasets MCP remote server to fetch
-                    real-time financial data and answer market queries.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/financial-mcp-agent" class="btn">View
-                        Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/financial-mcp-agent" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/financial_agent.png" alt="Financial MCP Agent" class="card-logo">
+                    <div><span class="tag">Finance</span></div>
+                    <h2>Financial MCP Agent</h2>
+                    <p>A specialized agent configured to interact with the Financial Datasets MCP remote server to fetch
+                        real-time financial data and answer market queries.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Test Data Generator -->
-            <div class="card">
-                <div><span class="tag">Development Tool</span></div>
-                <h2>Test Data Generator</h2>
-                <p>Creates realistic, structured test data for development. Generates personal profiles, business data,
-                    and custom patterns for database seeding.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/test_data_generator" class="btn">View
-                        Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/test_data_generator" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/test_data_agent.png" alt="Test Data Generator" class="card-logo">
+                    <div><span class="tag">Development Tool</span></div>
+                    <h2>Test Data Generator</h2>
+                    <p>Creates realistic, structured test data for development. Generates personal profiles, business
+                        data,
+                        and custom patterns for database seeding.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- Memory Agent CLI -->
-            <div class="card">
-                <div><span class="tag">Creative Writing</span></div>
-                <h2>Memory Agent CLI</h2>
-                <p>A CLI application for interactive storytelling. Uses a persistent memory agent to generate engaging
-                    and imaginative stories based on user prompts.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/MemoryAgentCLI" class="btn">View
-                        Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/MemoryAgentCLI" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/memory_agent.png" alt="Memory Agent CLI" class="card-logo">
+                    <div><span class="tag">Creative Writing</span></div>
+                    <h2>Memory Agent CLI</h2>
+                    <p>A CLI application for interactive storytelling. Uses a persistent memory agent to generate
+                        engaging
+                        and imaginative stories based on user prompts.</p>
                 </div>
-            </div>
+            </a>
 
             <!-- MCP Agent ADK -->
-            <div class="card">
-                <div><span class="tag">Integration</span></div>
-                <h2>MCP Agent ADK</h2>
-                <p>A demonstration of integrating custom Model Context Protocol (MCP) servers deployed on Alpic.ai with
-                    the Google ADK framework.</p>
-                <div class="card-actions">
-                    <a href="https://github.com/Dronanaik/google-adk/tree/main/mcp-agent-adk" class="btn">View Agent</a>
+            <a href="https://github.com/Dronanaik/google-adk/tree/main/mcp-agent-adk" class="card-link">
+                <div class="card">
+                    <div class="lightning-icon">⚡</div>
+                    <img src="assets/mcp_agent.png" alt="MCP Agent ADK" class="card-logo">
+                    <div><span class="tag">Integration</span></div>
+                    <h2>MCP Agent ADK</h2>
+                    <p>A demonstration of integrating custom Model Context Protocol (MCP) servers deployed on Alpic.ai
+                        with
+                        the Google ADK framework.</p>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
