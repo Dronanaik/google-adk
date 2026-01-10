@@ -21,6 +21,7 @@ A collection of intelligent agents built using the [Google Agent Development Kit
 | [**Test Data Generator**](test_data_generator/) | Generates realistic test data (profiles, business data) for development. |
 | [**Memory Agent CLI**](MemoryAgentCLI/) | Interactive storytelling agent with persistent memory. |
 | [**MCP Agent ADK**](mcp-agent-adk/) | Demo of integrating custom MCP servers with Google ADK. |
+| [**XrayAgent**](XrayAgent/) | Multi-agent system for automated test case management in Jira using Xray with 73+ Jira API functions. |
 
 ## 🚀 Getting Started
 
