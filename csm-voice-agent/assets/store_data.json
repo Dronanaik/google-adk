@@ -1,0 +1,141 @@
+{
+  "customers": [
+    {
+      "customer_id": "CUST-101",
+      "name": "Alex Rivera",
+      "email": "alex@example.com",
+      "phone": "555-0142",
+      "pin": "4210",
+      "tier": "Gold",
+      "account_status": "active",
+      "verified": false,
+      "orders": ["ORD-1001", "ORD-1002"]
+    },
+    {
+      "customer_id": "CUST-102",
+      "name": "Maya Lin",
+      "email": "maya@example.com",
+      "phone": "555-0198",
+      "pin": "9821",
+      "tier": "Platinum",
+      "account_status": "active",
+      "verified": false,
+      "orders": ["ORD-1003"]
+    },
+    {
+      "customer_id": "CUST-103",
+      "name": "Sam Patel",
+      "email": "sam@example.com",
+      "phone": "555-0177",
+      "pin": "7733",
+      "tier": "Standard",
+      "account_status": "flagged_hold",
+      "verified": false,
+      "orders": ["ORD-1004"]
+    }
+  ],
+  "orders": [
+    {
+      "order_id": "ORD-1001",
+      "customer_id": "CUST-101",
+      "customer_name": "Alex Rivera",
+      "status": "delivered",
+      "days_since_delivery": 3,
+      "total": 48.00,
+      "carrier": "UPS",
+      "tracking_number": "1Z999AA10123456784",
+      "eta": "Delivered 3 days ago",
+      "shipping_address": "742 Evergreen Terrace, Apt 4B, Seattle, WA 98101",
+      "items": [
+        {
+          "sku": "CF-POUR-01",
+          "name": "Ceramic Pour-Over Coffee Set",
+          "qty": 1,
+          "price": 48.00
+        }
+      ],
+      "notes": "Delivered to front porch."
+    },
+    {
+      "order_id": "ORD-1002",
+      "customer_id": "CUST-101",
+      "customer_name": "Alex Rivera",
+      "status": "in_transit",
+      "days_since_delivery": null,
+      "total": 249.00,
+      "carrier": "USPS",
+      "tracking_number": "9405511899223197428490",
+      "eta": "Tomorrow by 8:00 PM",
+      "shipping_address": "742 Evergreen Terrace, Apt 4B, Seattle, WA 98101",
+      "items": [
+        {
+          "sku": "GR-PRO-99",
+          "name": "AeroPress Pro Espresso Grinder",
+          "qty": 1,
+          "price": 249.00
+        }
+      ],
+      "notes": "In transit at regional distribution hub."
+    },
+    {
+      "order_id": "ORD-1003",
+      "customer_id": "CUST-102",
+      "customer_name": "Maya Lin",
+      "status": "processing",
+      "days_since_delivery": null,
+      "total": 108.00,
+      "carrier": "FedEx",
+      "tracking_number": "Pending fulfillment",
+      "eta": "Estimated in 3 business days",
+      "shipping_address": "1200 Market Street, Suite 300, San Francisco, CA 94102",
+      "items": [
+        {
+          "sku": "AU-NC-70",
+          "name": "Studio Noise-Canceling Headphones",
+          "qty": 1,
+          "price": 89.00
+        },
+        {
+          "sku": "CB-USBC-02",
+          "name": "USB-C Braided Audio Cable",
+          "qty": 1,
+          "price": 19.00
+        }
+      ],
+      "notes": "Preparing for shipment at warehouse."
+    },
+    {
+      "order_id": "ORD-1004",
+      "customer_id": "CUST-103",
+      "customer_name": "Sam Patel",
+      "status": "delivered",
+      "days_since_delivery": 45,
+      "total": 75.00,
+      "carrier": "FedEx",
+      "tracking_number": "FX-882190441",
+      "eta": "Delivered 45 days ago",
+      "shipping_address": "88 Austin Blvd, Austin, TX 78701",
+      "items": [
+        {
+          "sku": "KB-MECH-88",
+          "name": "Mechanical Wireless Keyboard",
+          "qty": 1,
+          "price": 75.00
+        }
+      ],
+      "notes": "Delivered 45 days ago (past 30-day return window)."
+    }
+  ],
+  "tickets": [
+    {
+      "ticket_id": "TKT-501",
+      "customer_id": "CUST-101",
+      "order_id": "ORD-1001",
+      "subject": "Cracked carafe on delivery",
+      "priority": "medium",
+      "status": "open",
+      "summary": "Customer reported hairline crack in ceramic carafe upon unboxing."
+    }
+  ]
+}
+

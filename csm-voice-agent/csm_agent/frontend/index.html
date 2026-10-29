@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>csm-voice-agent · with aria</title>
+<style>
+  :root {
+    --teal: #6ee7b7;
+    --cyan: #38bdf8;
+    --indigo: #818cf8;
+    --coral: #f87171;
+    --amber: #fbbf24;
+    --ink: #e2e8f0;
+    --muted: rgba(226, 232, 240, 0.55);
+    --faint: rgba(226, 232, 240, 0.25);
+    --card-bg: rgba(15, 23, 42, 0.72);
+    --card-border: rgba(148, 163, 184, 0.16);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, Inter, sans-serif;
+    background:
+      radial-gradient(ellipse at 15% 8%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 92%, rgba(129, 140, 248, 0.09) 0%, transparent 45%),
+      #090d16;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .chrome {
+    width: 100%;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--faint);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  }
+  .chrome-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .btn-reset {
+    margin: 0;
+    padding: 5px 12px;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .btn-reset:hover { border-color: var(--cyan); color: var(--ink); }
+
+  .workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 340px 1fr 300px;
+    gap: 20px;
+    padding: 16px 28px;
+    align-items: center;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  @media (max-width: 1024px) {
+    .workspace { grid-template-columns: 1fr; }
+  }
+
+  /* Left Panel: Customer & Order Inspector */
+  .inspector {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 64vh;
+    overflow-y: auto;
+  }
+  .panel-title {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 2px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    backdrop-filter: blur(10px);
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    background: rgba(56, 189, 248, 0.14);
+    color: var(--cyan);
+  }
+  .badge.delivered, .badge.ok, .badge.verified { background: rgba(110, 231, 183, 0.15); color: var(--teal); }
+  .badge.in_transit, .badge.processing { background: rgba(251, 191, 36, 0.15); color: var(--amber); }
+  .badge.refunded { background: rgba(129, 140, 248, 0.18); color: var(--indigo); }
+  .badge.flagged_hold, .badge.blocked { background: rgba(248, 113, 113, 0.16); color: var(--coral); }
+
+  .meta-row {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.65;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .meta-row span.val {
+    color: var(--ink);
+    text-align: right;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+  }
+  .items-list {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .sample-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sample-chip {
+    text-align: left;
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: rgba(15, 23, 42, 0.5);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .sample-chip:hover {
+    border-color: var(--cyan);
+    color: var(--ink);
+  }
+  .sample-chip strong { color: var(--ink); }
+
+  /* Center Stage: Voice Orb */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 16px;
+  }
+  .orb {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 36% 34%,
+      rgba(240, 253, 250, 0.95) 0%,
+      var(--cyan) 38%,
+      var(--indigo) 72%,
+      transparent 100%
+    );
+    filter: blur(2px);
+    opacity: 0.6;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .orb.idle      { animation: breathe 4.5s ease-in-out infinite; opacity: 0.52; }
+  .orb.listening { animation: pulse 1.6s ease-in-out infinite; opacity: 0.72; }
+  .orb.thinking  { animation: none; opacity: 0.45; }
+  .orb.speaking  { animation: speak 2.4s ease-in-out infinite; opacity: 0.92; }
+  @keyframes breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+  @keyframes pulse   { 0%,100%{transform:scale(1.0);opacity:.55} 50%{transform:scale(1.07);opacity:.82} }
+  @keyframes speak   { 0%,100%{transform:scale(1.02);filter:blur(2px) brightness(1)} 50%{transform:scale(1.12);filter:blur(2px) brightness(1.25)} }
+
+  .status {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+    min-height: 20px;
+    text-align: center;
+  }
+  .banner {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--teal);
+    min-height: 18px;
+    text-align: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .banner.blocked { color: var(--coral); }
+
+  /* Right Panel: Action & Policy Gate Log */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 60vh;
+  }
+  #actionlog {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .act {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--teal);
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: var(--muted);
+  }
+  .act .verdict {
+    display: inline-block;
+    margin-top: 3px;
+    color: var(--teal);
+    font-size: 10px;
+  }
+  .act.blocked {
+    border-left-color: var(--coral);
+    color: #fca5a5;
+  }
+  .act.blocked .verdict {
+    color: var(--coral);
+    font-weight: 600;
+  }
+
+  /* Bottom Bar: Transcript + Mic + Quick Text Input */
+  .info {
+    width: 100%;
+    padding: 14px 28px 24px;
+    background: linear-gradient(to top, rgba(9, 13, 22, 0.95), transparent);
+    text-align: center;
+  }
+  .transcript {
+    max-width: 680px;
+    margin: 0 auto 12px;
+    max-height: 105px;
+    overflow-y: auto;
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--muted);
+    text-align: left;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+  }
+  .line.aria { color: var(--cyan); }
+  .line.user { color: var(--ink); }
+
+  .controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  button#talk {
+    margin: 0;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--ink);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  button#talk:hover { border-color: var(--cyan); background: rgba(56, 189, 248, 0.22); }
+  button#talk:disabled { opacity: 0.75; }
+
+  .text-form {
+    display: flex;
+    flex: 1;
+    min-width: 260px;
+    gap: 6px;
+  }
+  .text-form input {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 999px;
+    padding: 9px 16px;
+    color: var(--ink);
+    font-size: 12px;
+    outline: none;
+  }
+  .text-form input:focus { border-color: var(--cyan); }
+  .text-form button {
+    margin: 0;
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .text-form button:hover { border-color: var(--cyan); }
+  .hint {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="chrome">
+    <span>csm-voice-agent</span>
+    <span>with aria · novamart customer support</span>
+    <div class="chrome-right">
+      <span id="policy-pill">policy gate · max auto-refund $100</span>
+      <button id="reset-btn" class="btn-reset">↺ reset demo</button>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <!-- Left Panel: Active Customer & Order Inspector -->
+    <div class="inspector">
+      <div class="panel-title">customer &amp; order inspector</div>
+      <div id="customer-card" class="card">
+        <div class="card-header">
+          <span class="card-title">No customer selected</span>
+          <span class="badge">idle</span>
+        </div>
+        <div class="meta-row"><span>Ask Aria to look up a customer or order below.</span></div>
+      </div>
+
+      <div id="order-card" class="card">
+        <div class="card-header">
+          <span class="card-title">No active order</span>
+          <span class="badge">idle</span>
+        </div>
+        <div class="meta-row"><span>Say an order ID like ORD-1001 or ORD-1002.</span></div>
+      </div>
+
+      <div class="panel-title" style="margin-top: 4px;">try asking aria (click or speak)</div>
+      <div class="sample-list">
+        <button class="sample-chip" data-prompt="Hi Aria, I'm Alex Rivera. Can you check my account and order ORD-1001?">
+          <strong>1. Lookup:</strong> "I'm Alex Rivera, check order ORD-1001"
+        </button>
+        <button class="sample-chip" data-prompt="Can you issue a $48 refund for order ORD-1001? The ceramic coffee carafe arrived cracked.">
+          <strong>2. Allowed Refund ($48):</strong> "Refund ORD-1001 (cracked carafe)"
+        </button>
+        <button class="sample-chip" data-prompt="Can you refund my espresso grinder on order ORD-1002 for $249?">
+          <strong>3. Blocked Refund ($249 &gt; $100):</strong> "Refund ORD-1002 ($249)"
+        </button>
+        <button class="sample-chip" data-prompt="Can you update the shipping address on order ORD-1003 to 500 Howard Street, San Francisco, CA?">
+          <strong>4. Update Address (Processing):</strong> "Reroute ORD-1003 to 500 Howard St"
+        </button>
+      </div>
+    </div>
+
+    <!-- Center Stage: Aria Voice Orb -->
+    <div class="stage">
+      <div id="orb" class="orb idle"></div>
+      <div id="status" class="status">tap 🎙 talk (or click a prompt) to speak with aria</div>
+      <div id="banner" class="banner"></div>
+    </div>
+
+    <!-- Right Panel: Policy Gate Action Log -->
+    <div class="actions">
+      <div class="panel-title">policy gate · action log</div>
+      <div id="actionlog">
+        <div class="act">
+          <div>▸ waiting for tool calls…</div>
+          <span class="verdict">before_tool_callback ready</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info">
+    <div id="transcript" class="transcript"></div>
+    <div class="controls-row">
+      <button id="talk">🎙 talk</button>
+      <form id="text-form" class="text-form">
+        <input id="text-input" type="text" placeholder="Or type a message to Aria (e.g. 'Check order ORD-1001')…" autocomplete="off" />
+        <button type="submit">send</button>
+      </form>
+    </div>
+    <div class="hint">headphones recommended · speak anytime to barge-in and interrupt aria</div>
+  </div>
+
+  <script src="/main.js"></script>
+</body>
+</html>
+
